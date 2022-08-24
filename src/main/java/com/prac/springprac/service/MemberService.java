@@ -4,10 +4,13 @@ package com.prac.springprac.service;
 import com.prac.springprac.domain.Member;
 import com.prac.springprac.repository.MemberRepository;
 import com.prac.springprac.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
 
     /*service클래스는 memberRepository와 다르게 네이밍부터 좀더 비지니스 로직에 가까운 네이밍을 쓴다
@@ -18,6 +21,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     //외부에서 memberepository를 넣어줌
+    @Autowired
     public MemberService(MemberRepository memberRepository){
         this.memberRepository= memberRepository;
     }

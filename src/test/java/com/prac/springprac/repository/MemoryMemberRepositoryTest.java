@@ -12,10 +12,11 @@ import java.util.List;
 public class MemoryMemberRepositoryTest {
 
     MemberRepository memberRepository= new MemoryMemberRepository();
+    MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
 
     @AfterEach
     public void afterEach(){
-        memberRepository.clear();
+        memoryMemberRepository.clear();;
     }
     @Test
     public void save(){

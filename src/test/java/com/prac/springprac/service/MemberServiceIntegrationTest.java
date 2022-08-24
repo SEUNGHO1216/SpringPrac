@@ -3,39 +3,30 @@ package com.prac.springprac.service;
 import com.prac.springprac.domain.Member;
 import com.prac.springprac.repository.MemberRepository;
 import com.prac.springprac.repository.MemoryMemberRepository;
-import com.prac.springprac.service.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 
-public class MemberServiceTest {
+@SpringBootTest
+@Transactional
+/*transaction을 달아야 commit을 안 시키고 롤백을 시킨다. 하나의 테스트 단위마다 롤백시켜버린다. AfterEach로 지워줄 필요 x
+테스트 케이스에 이 애노테이션이 있으면, 테스트 시작 전에 트랜잭션을 시작하고, 테스트 완료 후에 항상 롤백한다.
+이렇게 하면 DB에 데이터가 남지 않으므로 다음 테스트에 영향을 주지 않는다.*/
+public class MemberServiceIntegrationTest {
     /*테스트 코드는 빌드 시 실제 코드에 포함되지 않는다*/
 
-    /*
-    문제:MemberService 클래스에서 new 로 생성하고 있는 MemoryMemberRepository와 테스트케이스에서 new Memory~ 클래스 각 다른 인스턴스
-        머 일단 지금은 Repository에 자료구조 map이 static 선언 돼있으니 괜찮지만 그렇지 않다면 서로 다른 인스턴스 사용으로 인해 정보가 섞일 우려가 있음
-    해결:의존성을 주입시켜줌
-    */
+   @Autowired
     MemberService memberService;
+   @Autowired
     MemberRepository memberRepository;
-    MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach(){
-        memoryMemberRepository.clear();
-//        memberRepository.clear();
-    }
 
     @Test
     public void join(){

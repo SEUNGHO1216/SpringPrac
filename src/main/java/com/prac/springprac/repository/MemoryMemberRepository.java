@@ -1,11 +1,13 @@
 package com.prac.springprac.repository;
 
 import com.prac.springprac.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+//@Repository
 public class MemoryMemberRepository implements MemberRepository{
 
     private static Map<Long, Member> store = new ConcurrentHashMap<>();/*new HashMap<>();*/
@@ -40,7 +42,6 @@ public class MemoryMemberRepository implements MemberRepository{
         return new ArrayList<>(store.values());
     }
 
-    @Override
     public void clear(){
         //map 함수 중 하나인 clear를 사용하여 모든 요소를 다 지움
         store.clear();;
